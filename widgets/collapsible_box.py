@@ -1,7 +1,5 @@
-from PySide6.QtWidgets import (QWidget, QToolButton, QScrollArea,
-                              QVBoxLayout, QFrame, QSizePolicy)
-from PySide6.QtCore import (Qt, QParallelAnimationGroup,
-                           QPropertyAnimation, QAbstractAnimation)
+from PySide6.QtWidgets import QWidget, QToolButton, QScrollArea, QVBoxLayout, QFrame, QSizePolicy
+from PySide6.QtCore import Qt, QParallelAnimationGroup, QPropertyAnimation, QAbstractAnimation
 
 
 class CollapsibleBox(QWidget):

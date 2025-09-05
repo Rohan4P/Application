@@ -1,7 +1,6 @@
 # app/ui/preset_control.py
 from PySide6.QtWidgets import (QGroupBox, QVBoxLayout, QHBoxLayout, QGridLayout,
                                QLabel, QPushButton, QComboBox, QSpinBox, QFrame, QSizePolicy)
-from PySide6.QtCore import Qt
 from ui.collapsible_box import CollapsibleBox
 
 

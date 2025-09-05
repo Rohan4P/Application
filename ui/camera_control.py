@@ -100,3 +100,5 @@ class CameraControlSection(QGroupBox):
             btn.clicked.connect(lambda _, url=rtsp_url: self.main_window.video_stream.connect(url))
             self.stream_button_layout.addWidget(btn)
             self.stream_buttons[stream_type] = btn
+
+

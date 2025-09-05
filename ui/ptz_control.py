@@ -1,3 +1,4 @@
+# ui/ptz_control.py
 from PySide6.QtWidgets import (
     QGroupBox, QVBoxLayout, QHBoxLayout, QGridLayout, QWidget, QDoubleSpinBox,
     QLabel, QSlider, QPushButton, QFrame, QCheckBox
@@ -28,13 +29,13 @@ class PTZControlSection(CollapsibleBox):
 
         # Pan control + speed input
         # position labels
-        self.pan_label   = QLabel("None")
-        self.tilt_label  = QLabel("None")
-        self.zoom_label  = QLabel("None")
+        self.pan_label = QLabel("None")
+        self.tilt_label = QLabel("None")
+        self.zoom_label = QLabel("None")
         self.focus_label = QLabel("None")
 
         self.update_checkbox = QCheckBox("Polling Position")
-        self.update_checkbox.setChecked(True)
+        self.update_checkbox.setChecked(False)
 
         abs_layout.addWidget(QLabel("Pan:"), 1, 0)
         abs_layout.addWidget(self.pan_label, 1, 1)

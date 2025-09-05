@@ -24,19 +24,13 @@ class ConnectionDialog(QDialog):
         # Port
         self.port_input = QSpinBox()
         self.port_input.setRange(1, 65535)
-        self.port_input.setValue(4001)  # Default Pelco port
+        self.port_input.setValue(8005)  # Default Pelco port
         layout.addRow("Port:", self.port_input)
 
         # Protocol selection
         self.protocol_combo = QComboBox()
-        self.protocol_combo.addItems(["Pelco-D", "Pelco-P"])
+        self.protocol_combo.addItems(["Pelco-D"])
         layout.addRow("Protocol:", self.protocol_combo)
-
-        # Camera address (for Pelco protocols)
-        self.address_input = QSpinBox()
-        self.address_input.setRange(1, 255)
-        self.address_input.setValue(1)
-        layout.addRow("Camera Address:", self.address_input)
 
         # Create layout with label and + button
         rtsp_header_layout = QHBoxLayout()
@@ -85,7 +79,6 @@ class ConnectionDialog(QDialog):
             if protocol_index >= 0:
                 self.protocol_combo.setCurrentIndex(protocol_index)
 
-            self.address_input.setValue(connection_data.get("address", 1))
             # Load RTSP URLs (new dictionary format)
             rtsp_dict = connection_data.get("rtsp_urls", {})
 
@@ -139,7 +132,6 @@ class ConnectionDialog(QDialog):
             "ip": self.ip_input.text(),
             "port": self.port_input.value(),
             "protocol": self.protocol_combo.currentText(),
-            "address": self.address_input.value(),
             "rtsp_urls": rtsp_urls
         }
 

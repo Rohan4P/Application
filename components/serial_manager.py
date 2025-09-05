@@ -5,11 +5,9 @@ from lib.pelco import PelcoDevice, PelcoModel
 
 
 class SerialHandler:
-    def __init__(self, defaults):
+    def __init__(self, main_window):
+        self._main_window = main_window
         self._keyboard_event_subscribers = []
-        self._commPort = defaults.get('serialCom')
-        self._protocol = defaults.get('protocol')
-        self._baud = defaults.get('baud')
         self._serial_device = None
         self._serial_com = None
         self._connected = False
@@ -17,10 +15,7 @@ class SerialHandler:
     def register_keyboard_subscriber(self, subscriber):
         self._keyboard_event_subscribers.append(subscriber)
 
-    def get_backup_values(self):
-        return dict(protocol=self._protocol, serialCom=self._commPort, baud=self._baud)
-
-    def connect(self, port, baudrate, protocol):
+    def connect(self, port, baudrate):
         if self._serial_com and self._serial_com.is_open:
             return True  # Already connected
 

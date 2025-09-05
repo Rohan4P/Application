@@ -1,7 +1,7 @@
 # ui/connection_tab.py
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QGroupBox, QFormLayout, QHBoxLayout,
-    QLabel, QComboBox, QPushButton, QFrame, QSpinBox
+    QLabel, QComboBox, QPushButton, QFrame
 )
 
 
@@ -16,7 +16,7 @@ class ConnectionTab(QWidget):
         layout = QVBoxLayout()
 
         # Connection list group
-        conn_group = QGroupBox("Camera Connections")
+        conn_group = QGroupBox("Connections")
         conn_layout = QVBoxLayout()
 
         self.conn_combo = QComboBox()
@@ -35,7 +35,7 @@ class ConnectionTab(QWidget):
         layout.addWidget(conn_group)
 
         # Connection details
-        details_group = QGroupBox("Camera Details")
+        details_group = QGroupBox("Details")
         details_layout = QFormLayout()
 
         self.name_label = QLabel("-")
@@ -64,7 +64,7 @@ class ConnectionTab(QWidget):
         layout.addWidget(separator)
 
         # Serial connection group
-        serial_group = QGroupBox("Serial Connection")
+        serial_group = QGroupBox("Serial")
         serial_layout = QFormLayout()
 
         # COM Port Row with buttons
@@ -133,9 +133,8 @@ class ConnectionTab(QWidget):
         """Handle serial connection"""
         port = self.serial_combo.currentText()
         baud = int(self.baud_combo.currentText())
-        protocol = self.protocol_combo.currentText().lower()
 
-        if self.main_window.serial_handler.connect(port, baud, protocol):
+        if self.main_window.serial_handler.connect(port, baud):
             self.update_serial_ui(True)
         else:
             self.serial_status.setText("Connection Failed")
@@ -221,3 +220,26 @@ class ConnectionTab(QWidget):
         self.port_label.setText("-")
         self.protocol_label.setText("-")
         self.rtsp_label.setText("-")
+
+    def set_ip_and_connect(self, ip, name="System"):
+        """Add/select a connection for given IP and auto-connect"""
+        # Check if IP already exists in connections
+        idx = next((i for i, conn in enumerate(self.main_window.connections) if conn.get("ip") == ip), -1)
+        if idx == -1:
+            # Create a temporary connection if not found
+            new_conn = {
+                "name": name,
+                "ip": ip,
+                "port": 8005,
+                "protocol": "Pelco-D",
+                "rtsp_urls": {}
+            }
+            self.main_window.connections.append(new_conn)
+            self.update_connection_combo()
+            idx = len(self.main_window.connections) - 1
+        # Select the connection in combo
+        self.conn_combo.setCurrentIndex(idx)
+        self.update_connection_details()
+
+        # Trigger connect
+        self.main_window.connect_to_selected()
